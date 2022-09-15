@@ -1,0 +1,44 @@
+//- Esto es un comentario ignorado por pug. No se incluye en el archivo final.
+doctype html
+html(lang="es")
+  head
+    //- Incluir archivos de texto sin cambios:
+    include ./commonmeta.html
+    //- Tag HTML dinamico. Variable [pageTitle]
+    title=pageTitle
+    //- Script.
+    script(src="/lib/aframe-v1.3.0.min.js")
+    script(src="/components/slot.js")
+    //- Stylesheet.
+    link(rel="stylesheet", href="../styles/index.css")
+    link(rel="stylesheet", href="../styles/carmenu.css")
+  body
+    //- Div con id [ResumePanel] y clase [hidden]
+    #ResumePanel.hidden
+      ul 
+        li
+            h1=welcome
+        li 
+            p!=mainMessage
+        li 
+            img(src=imgSrc, alt=imgAlt)
+        li 
+            button(id='check-policy') Ver detalle
+
+    a-scene(background="color:#85cfff")
+      //Asset Preloading
+      a-assets
+        for asset in assets
+            a-asset-item(id=asset.id src=asset.src)
+      //rendering
+      a-camera
+      //lighting
+      a-entity(id="mainLight" light="type:directional; color:#fff; intensity:1.6; castShadow:true")
+      //pon tus elementos aqui
+      for asset in assets
+        a-entity(gltf-model=`#${asset.id}` customslot)
+
+    script(src="/debug.js")
+
+//- Ejecucion en CLI.
+//- pug -O "{pageTitle:"Blank AFrame Project", assets:[{id:'car', src:'./assets/models/Escena_Xerox_Car.gltf'},{id:'house', src:'./assets/models/Escena_Xerox_House.gltf'}],welcome:'Hola Maria', mainMessage:'Esta es la cuota personalizada de tu toyota', imgSrc:'assets/ui/included.png', imgAlt:''}" -o ./dev/testCompile ./templates/index.pug -P
