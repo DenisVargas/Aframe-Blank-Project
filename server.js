@@ -3,16 +3,22 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const MODE = process.env.MODE || 'development';
 
 app.use(express.static(path.resolve(__dirname, 'public')));
 
-app.listen(PORT, ()=>{
-    console.log(`App running in port:${PORT}`);
-});
-
 //Rutas
-app.get('/', (req,res)=>{
-    //Respuesta.
-    //res.sendFile();
-    res.send('Conexion establecida');
+// app.get('/', (req,res)=>{
+//     //Respuesta.
+//     //res.sendFile();
+//     res.send('Conexion establecida');
+// });
+
+app.listen(PORT, ()=>{
+    if(MODE === 'development'){
+        console.log(`App running in https://localhost:${PORT}`);
+        return;
+    }
+    
+    console.log(`App runing in port: ${PORT}`);
 });
