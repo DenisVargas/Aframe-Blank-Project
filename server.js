@@ -16,7 +16,7 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 app.listen(PORT, ()=>{
     if(MODE === 'development'){
-        console.log(`App running in https://localhost:${PORT}`);
+        console.log(`App running in http://localhost:${PORT}/`);
         return;
     }
     
